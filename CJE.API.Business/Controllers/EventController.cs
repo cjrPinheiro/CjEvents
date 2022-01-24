@@ -1,4 +1,5 @@
-﻿using CJE.API.Business.Models;
+﻿using CJE.API.Business.Data;
+using CJE.API.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,23 +14,24 @@ namespace CJE.API.Business.Controllers
     public class EventController : ControllerBase
     {
         private readonly ILogger<EventController> _logger;
+        private readonly DataContext _context;
 
-        public EventController(ILogger<EventController> logger)
+        public EventController(DataContext context, ILogger<EventController> logger)
         {
+            _context = context;
             _logger = logger;
         }
-
         [HttpGet]
         public IEnumerable<Event> Get()
         {
 
-            return new List<Event>();
+            return _context.Events;
         }
         [HttpGet]
         [Route("{id}")]
         public Event Get(int id)
         {
-            return new Event();
+            return _context.Events.FirstOrDefault(q => q.Id == id);
         }
         [HttpPost]
         public string Post()
