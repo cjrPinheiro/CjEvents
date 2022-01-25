@@ -1,13 +1,13 @@
   <h2>Events</h2>
   <hr>
 
-  <form action="" class="form-inline">
+  <div class="form-inline">
     <div class="form-group mb-2">
-      <input type="text" class="form-control mr-2" placeholder="Search">
-      <button class="btn btn-outline-success">Buscar</button>
+      <label for="filter" class="me-2">Filter: </label>
+      <input type="text" id="filter" class="form-control me-2" placeholder="Search" [(ngModel)]="filterRows">
     </div>
-  </form>
-
+  </div>
+  <h2>Filtro: {{filterRows}}</h2>
   <table class="table table-striped">
     <thead class="table-dark">
       <tr>
@@ -26,7 +26,7 @@
       </tr>
     </thead>
     <tbody *ngIf="events && events.length">
-      <tr *ngFor="let event of events">
+      <tr *ngFor="let event of filteredEvents">
         <td>
           <img [collapse]="!showImage"
           [isAnimated] = "true"
@@ -42,7 +42,10 @@
         <td>{{event.date}}</td>
         <td>{{event.maxPeople}}</td>
         <td>{{event.batch}}</td>
-        <td>{{event.options}}</td>
+        <td>
+          <button class="btn btn-primary btn-sm me-2">Edit</button>
+          <button class="btn btn-danger btn-sm">Delete</button>
+        </td>
       </tr>
 
     </tbody>
