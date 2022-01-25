@@ -8,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventsComponent implements OnInit {
 
-  public events: any;
-
+  public events: any = [];
+  widthImg : number = 150;
+  marginImg : number = 2;
+  showImage : boolean = true;
   constructor(private http: HttpClient) { }
 
 
@@ -18,6 +20,10 @@ export class EventsComponent implements OnInit {
     this.getEventos();
   }
 
+  public AlterImage() : void {
+    this.showImage = !this.showImage;
+
+  }
   public getEventos() : void {
     this.http.get('https://localhost:5001/api/Event').subscribe(
       response => this.events = response,

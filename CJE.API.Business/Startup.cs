@@ -30,7 +30,8 @@ namespace CJE.API.Business
         {
             services.AddDbContext<DataContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
-                );
+            );
+
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
