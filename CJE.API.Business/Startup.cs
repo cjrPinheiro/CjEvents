@@ -1,4 +1,9 @@
-using CJE.API.Business.Data;
+using CJE.Aplication.Interfaces;
+using CJE.Aplication.Services;
+using CJE.Persistence;
+using CJE.Persistence.Interfaces;
+using CJE.Persistence.Interfaces.Base;
+using CJE.Persistence.Repositories.Base;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,11 +33,18 @@ namespace CJE.API.Business
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(
+            services.AddDbContext<CjEventsContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<ISpeakerService, SpeakerService>();
+            services.AddScoped<IEventPersist, EventPersist>();
+            services.AddScoped<ISpeakerPersist, SpeakerPersist>();
+            services.AddScoped<IBasePersist, BasePersist>();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x=> x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
