@@ -75,7 +75,7 @@ namespace CJE.API.Business.Controllers
             }
         }
         [HttpGet]
-        [Route("tema/{theme}")]
+        [Route("theme/{theme}")]
         public async Task<IActionResult> GetByTheme(string theme)
         {
             try
