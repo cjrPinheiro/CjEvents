@@ -20,8 +20,13 @@ import { EventService } from 'src/_app/_services/event.service';
 import { DateTimeFormatPipe } from 'src/_app/_helpers/dateTimeFormat.pipe';
 import { TitleComponent } from './_shared/title/title.component';
 import { DashboardComponent } from './_components/dashboard/dashboard.component';
-import { ProfileComponent } from './_components/profile/profile.component';
+import { ProfileComponent } from './_components/user/profile/profile.component';
 import { ContactComponent } from './_components/contact/contact.component';
+import { EventDetailComponent } from './_components/events/event-detail/event-detail.component';
+import { EventListComponent } from './_components/events/event-list/event-list.component';
+import { UserComponent } from './_components/user/user.component';
+import { LoginComponent } from './_components/user/login/login.component';
+import { RegistrationComponent } from './_components/user/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,12 @@ import { ContactComponent } from './_components/contact/contact.component';
     TitleComponent,
     DashboardComponent,
     ProfileComponent,
-    ContactComponent
+    ContactComponent,
+    EventDetailComponent,
+    EventListComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent
    ],
   imports: [
     BrowserModule,
