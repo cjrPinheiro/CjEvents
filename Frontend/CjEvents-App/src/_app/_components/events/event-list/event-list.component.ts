@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EventObj } from 'src/_app/_models/eventObj';
-import { EventService } from 'src/_app/_services/event.service';
+import { EventObj } from '@app/_models/eventObj';
+import { EventService } from '@app/_services/event.service';
 import { Component, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
@@ -90,7 +88,7 @@ export class EventListComponent implements OnInit {
   }
 
   detailEvent(id: number):void{
-    this.router.navigate([`events/detail/${id}`])
+    this.router.navigate([`/events/detail/${id}`])
 
   }
 }

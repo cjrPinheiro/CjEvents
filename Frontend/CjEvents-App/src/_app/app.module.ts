@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
 import { EventsComponent } from './_components/events/events.component';
 import { SpeakersComponent } from './_components/speakers/speakers.component';
 import { NavComponent } from './_components/nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventService } from 'src/_app/_services/event.service';
 import { DateTimeFormatPipe } from 'src/_app/_helpers/dateTimeFormat.pipe';
 import { TitleComponent } from './_shared/title/title.component';
@@ -52,6 +52,7 @@ import { RegistrationComponent } from './_components/user/registration/registrat
     BrowserAnimationsModule,
     CollapseModule,
     FormsModule,
+    ReactiveFormsModule,
     BsDropdownModule,
     TooltipModule,
     ModalModule,
