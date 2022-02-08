@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using AutoMapper;
 namespace CJE.API.Business
 {
     public class Startup
@@ -40,11 +40,11 @@ namespace CJE.API.Business
             services.AddScoped<ISpeakerService, SpeakerService>();
             services.AddScoped<IEventPersist, EventPersist>();
             services.AddScoped<ISpeakerPersist, SpeakerPersist>();
-            services.AddScoped<IBasePersist, BasePersist>();
+            //services.AddScoped<IBasePersist, BasePersist>();
 
             services.AddControllers()
                 .AddNewtonsoftJson(x=> x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddSwaggerGen(c =>
             {

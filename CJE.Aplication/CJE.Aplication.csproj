@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CJE.Common\CJE.Common.csproj" />
     <ProjectReference Include="..\CJE.Domain\CJE.Domain.csproj" />
     <ProjectReference Include="..\CJE.Persistence\CJE.Persistence.csproj" />

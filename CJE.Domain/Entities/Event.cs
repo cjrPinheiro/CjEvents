@@ -1,15 +1,20 @@
 ﻿using CJE.Domain.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CJE.Domain.Entities
 {
+    [Table("Event")]
     public class Event : BaseEntity
     {
         public string Place { get; set; }
         public DateTime? Date { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string Theme { get; set; }
         public int MaxPeople { get; set; }
         public string ImageURL { get; set; }

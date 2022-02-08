@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CJE.Persistence.Interfaces
 {
-    public interface IEventPersist : IBasePersist
+    public interface IEventPersist : IBasePersist<Event>
     {
         Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers);
         Task<Event[]> GetAllEventsAsync(bool includeSpeakers);

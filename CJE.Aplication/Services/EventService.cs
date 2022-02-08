@@ -1,25 +1,32 @@
 ﻿using CJE.Aplication.Interfaces;
-using CJE.Domain.Entities;
 using CJE.Persistence.Interfaces;
 using System;
 using System.Threading.Tasks;
 using CJE.Common.Exceptions;
+using CJE.Aplication.Dtos;
+using CJE.Domain.Entities;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace CJE.Aplication.Services
 {
     public class EventService : IEventService
     {
         private readonly IEventPersist _eventRepository;
+        private readonly IMapper _mapper;
 
-        public EventService(IEventPersist eventPersist)
+        public EventService(IEventPersist eventPersist, IMapper mapper)
         {
             _eventRepository = eventPersist;
+            _mapper = mapper;
         }
-        public async Task<bool> AddEvent(Event @event)
+        public async Task<bool> AddEvent(EventDto @event)
         {
+            Event newEvent = null;
             try
             {
-                await _eventRepository.AddAsync(@event);
+                newEvent = _mapper.Map<Event>(@event);
+                await _eventRepository.AddAsync(newEvent);
                 return await _eventRepository.SaveChangesAsync();
             }
             catch (Exception)
@@ -27,20 +34,23 @@ namespace CJE.Aplication.Services
                 throw;
             }
 
-           
+
         }
-        public async Task<bool> UpdateEvent(Event @event)
+        public async Task<bool> UpdateEvent(EventDto @event)
         {
+            
             try
             {
-                //verificar existencia do item
                 var existEvent = await _eventRepository.GetEventByIdAsync(@event.Id, false);
                 if (existEvent == null) throw new DataNotFoundException($"EventId: {@event.Id} not found in database.");
 
-                _eventRepository.Update(@event);
+                _mapper.Map(@event, existEvent);
+            
+
+                _eventRepository.Update(existEvent);
                 return await _eventRepository.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }
@@ -59,14 +69,17 @@ namespace CJE.Aplication.Services
             catch (Exception)
             {
                 throw;
-            }     
+            }
         }
 
-        public async Task<Event[]> GetAllEventsAsync(bool includeSpeakers = false)
+        public async Task<EventDto[]> GetAllEventsAsync(bool includeSpeakers = false)
         {
+            EventDto[] eventsRes = null;
             try
             {
-                return await _eventRepository.GetAllEventsAsync(includeSpeakers);
+                var events = await _eventRepository.GetAllEventsAsync(includeSpeakers);
+                eventsRes = _mapper.Map<EventDto[]>(events);
+                return eventsRes;
             }
             catch (Exception)
             {
@@ -74,23 +87,30 @@ namespace CJE.Aplication.Services
             }
         }
 
-        public async Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers = false)
+        public async Task<EventDto[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers = false)
         {
+            EventDto[] eventsRes = null;
             try
             {
-                return await _eventRepository.GetAllEventsByThemeAsync(theme,includeSpeakers);
+                var events = await _eventRepository.GetAllEventsByThemeAsync(theme, includeSpeakers);
+                eventsRes = _mapper.Map<EventDto[]>(events);
+                return eventsRes;
+
             }
             catch (Exception)
             {
                 throw;
-            }     
+            }
         }
 
-        public async Task<Event> GetEventByIdAsync(int Id, bool includeSpeakers = false)
+        public async Task<EventDto> GetEventByIdAsync(int Id, bool includeSpeakers = false)
         {
+            EventDto eventRes = null;
             try
             {
-                return await _eventRepository.GetEventByIdAsync(Id, includeSpeakers);
+                var events = await _eventRepository.GetEventByIdAsync(Id, includeSpeakers);
+                eventRes = _mapper.Map<EventDto>(events);
+                return eventRes;
             }
             catch (Exception)
             {

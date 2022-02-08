@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CJE.Persistence
 {
-    public class EventPersist : BasePersist, IEventPersist
+    public class EventPersist : BasePersist<Event>, IEventPersist
     {
         public EventPersist(CjEventsContext context) : base(context) {}
         public async Task<Event> GetEventByIdAsync(int Id, bool includeSpeakers)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CJE.Persistence.Repositories.Base
 {
-    public class BasePersist : IBasePersist
+    public class BasePersist<R>  : IBasePersist<R> where R : class
     {
         protected readonly CjEventsContext _context;
 
@@ -16,22 +16,22 @@ namespace CJE.Persistence.Repositories.Base
             this._context = context;
         }
 
-        public async Task AddAsync<T>(T entity) where T : class
+        public async Task AddAsync(R entity) 
         {
             await _context.AddAsync(entity);
         }
 
-        public void Update<T>(T entity) where T : class
+        public void Update(R entity) 
         {
              _context.Update(entity);
         }
 
-        public void Delete<T>(T entity) where T : class
+        public void Delete(R entity)
         {
             _context.Remove(entity);
         }
 
-        public void DeleteRange<T>(T[] entityArray) where T : class
+        public void DeleteRange(R[] entityArray) 
         {
             _context.RemoveRange(entityArray);
         }

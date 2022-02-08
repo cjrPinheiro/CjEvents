@@ -1,12 +1,11 @@
 ﻿using CJE.API.Business.Models;
+using CJE.Aplication.Dtos;
 using CJE.Aplication.Interfaces;
-using CJE.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CJE.API.Business.Controllers
@@ -30,9 +29,10 @@ namespace CJE.API.Business.Controllers
             try
             {
                 var events = await _eventService.GetAllEventsAsync(true);
+                var eventsReturn = new List<EventDto>();
 
                 if (events == null)
-                    return NotFound();
+                    return NoContent();
 
                 return Ok(events);
 
@@ -63,7 +63,7 @@ namespace CJE.API.Business.Controllers
                 var @event = await _eventService.GetEventByIdAsync(id, true);
 
                 if (@event == null)
-                    return NotFound();
+                    return NoContent();
 
                 return Ok(@event);
             }
@@ -83,7 +83,7 @@ namespace CJE.API.Business.Controllers
                 var @event = await _eventService.GetAllEventsByThemeAsync(theme, true);
 
                 if (@event == null)
-                    return NotFound();
+                    return NoContent();
 
                 return Ok(@event);
             }
@@ -95,7 +95,7 @@ namespace CJE.API.Business.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Post(Event @event)
+        public async Task<IActionResult> Post(EventDto @event)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace CJE.API.Business.Controllers
 
                 if (!newEvent) { 
                     //implementar log
-                    return BadRequest(GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado ou criado."));
+                    return BadRequest(GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi criado."));
                 }
                 return Created("","");
             }
@@ -115,7 +115,7 @@ namespace CJE.API.Business.Controllers
             }
         }
         [HttpPut]
-        public async Task<IActionResult> Put(Event @event)
+        public async Task<IActionResult> Put(EventDto @event)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace CJE.API.Business.Controllers
                 if (!uptEvent)
                 {
                     //implementar log
-                    return BadRequest(GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado ou criado."));
+                    return BadRequest(GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado."));
                 }
 
                 return Ok();
