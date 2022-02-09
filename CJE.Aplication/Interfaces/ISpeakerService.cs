@@ -10,7 +10,7 @@ namespace CJE.Aplication.Interfaces
     public interface ISpeakerService
     {
         Task<bool> AddSpeaker(Speaker speaker);
-        Task<bool> UpdateSpeaker(Speaker speaker);
+        Task<bool> UpdateSpeaker(int id, Speaker speaker);
         Task<bool> DeleteSpeaker(int idSpeaker);
 
         Task<Speaker[]> GetAllSpeakersByThemeAsync(string theme, bool includeEvents = false);

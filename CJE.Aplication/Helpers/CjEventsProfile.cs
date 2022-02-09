@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CJE.Aplication.Dtos;
 using CJE.Domain.Entities;
+using CJE.Domain.Entities.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace CJE.API.Business.Helpers
                 .ReverseMap();
             CreateMap<Batch, BatchDto>()
                 .ReverseMap();
+            CreateMap<User, UserDto>()
+                .ReverseMap();
+            CreateMap<User, UserExistingDto>()
+                .ReverseMap();
+            
         }
     }
 }

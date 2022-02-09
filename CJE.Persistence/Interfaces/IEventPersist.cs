@@ -10,8 +10,8 @@ namespace CJE.Persistence.Interfaces
 {
     public interface IEventPersist : IBasePersist<Event>
     {
-        Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers);
-        Task<Event[]> GetAllEventsAsync(bool includeSpeakers);
-        Task<Event> GetEventByIdAsync(int Id, bool includeSpeakers);
+        Task<Event[]> GetAllEventsByThemeAsync(int userId, string theme, bool includeSpeakers);
+        Task<Event[]> GetAllEventsAsync(int userId, bool includeSpeakers);
+        Task<Event> GetEventByIdAsync(int userId, int Id, bool includeSpeakers);
     }
 }

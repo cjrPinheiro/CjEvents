@@ -1,6 +1,8 @@
-﻿using CJE.API.Business.Models;
-using CJE.Aplication.Dtos;
+﻿using CJE.Aplication.Dtos;
 using CJE.Aplication.Interfaces;
+using CJE.Common.Extensions;
+using CJE.Common.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace CJE.API.Business.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class EventController : ControllerBase
@@ -28,7 +31,7 @@ namespace CJE.API.Business.Controllers
 
             try
             {
-                var events = await _eventService.GetAllEventsAsync(true);
+                var events = await _eventService.GetAllEventsAsync(User.GetUserId(), true);
                 var eventsReturn = new List<EventDto>();
 
                 if (events == null)
@@ -40,19 +43,13 @@ namespace CJE.API.Business.Controllers
             }
             catch (Exception e)
             {
-                var error = GenerateError("Ocorreu um erro interno na aplicação.", e);
+                var error = CommonFunctions.GenerateError("Ocorreu um erro interno na aplicação.", e);
                 //implementar log
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }
         }
 
-        private GenericError GenerateError(string message, Exception exception = null)
-        {
-            var guid = new Guid().ToString();
-            GenericError error = new(guid,  message, exception != null ? exception.Message : "");
 
-            return error;
-        }
 
         [HttpGet]
         [Route("{id}")]
@@ -60,7 +57,7 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                var @event = await _eventService.GetEventByIdAsync(id, true);
+                var @event = await _eventService.GetEventByIdAsync(User.GetUserId(), id, true);
 
                 if (@event == null)
                     return NoContent();
@@ -69,7 +66,7 @@ namespace CJE.API.Business.Controllers
             }
             catch (Exception e)
             {
-                var error = GenerateError("Ocorreu um erro interno na aplicação.", e);
+                var error = CommonFunctions.GenerateError("Ocorreu um erro interno na aplicação.", e);
                 //implementar log
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }
@@ -80,7 +77,7 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                var @event = await _eventService.GetAllEventsByThemeAsync(theme, true);
+                var @event = await _eventService.GetAllEventsByThemeAsync(User.GetUserId(), theme, true);
 
                 if (@event == null)
                     return NoContent();
@@ -89,7 +86,7 @@ namespace CJE.API.Business.Controllers
             }
             catch (Exception e)
             {
-                var error = GenerateError("Ocorreu um erro interno na aplicação.", e);
+                var error = CommonFunctions.GenerateError("Ocorreu um erro interno na aplicação.", e);
                 //implementar log
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }
@@ -99,39 +96,40 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                var newEvent = await _eventService.AddEvent(@event);
+                var newEvent = await _eventService.AddEvent(User.GetUserId(), @event);
 
-                if (!newEvent) { 
+                if (!newEvent)
+                {
                     //implementar log
-                    return BadRequest(GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi criado."));
+                    return BadRequest(CommonFunctions.GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi criado."));
                 }
-                return Created("","");
+                return Created("", "");
             }
             catch (Exception e)
             {
-                var error = GenerateError("Ocorreu um erro interno na aplicação.", e);
+                var error = CommonFunctions.GenerateError("Ocorreu um erro interno na aplicação.", e);
                 //implementar log
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }
         }
         [HttpPut]
-        public async Task<IActionResult> Put(EventDto @event)
+        public async Task<IActionResult> Put(int id, EventDto @event)
         {
             try
             {
-                var uptEvent = await _eventService.UpdateEvent(@event);
+                var uptEvent = await _eventService.UpdateEvent(User.GetUserId(), id, @event);
 
                 if (!uptEvent)
                 {
                     //implementar log
-                    return BadRequest(GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado."));
+                    return BadRequest(CommonFunctions.GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado."));
                 }
 
                 return Ok();
             }
             catch (Exception e)
             {
-                var error = GenerateError("Ocorreu um erro interno na aplicação.", e);
+                var error = CommonFunctions.GenerateError("Ocorreu um erro interno na aplicação.", e);
                 //implementar log
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }
@@ -142,19 +140,19 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                var @event = await _eventService.DeleteEvent(id);
+                var @event = await _eventService.DeleteEvent(User.GetUserId(), id);
 
                 if (!@event)
                 {
                     //implementar log
-                    return this.StatusCode(StatusCodes.Status500InternalServerError, GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado ou criado."));
+                    return this.StatusCode(StatusCodes.Status500InternalServerError, CommonFunctions.GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi atualizado ou criado."));
                 }
 
                 return Ok();
             }
             catch (Exception e)
             {
-                var error = GenerateError("Ocorreu um erro interno na aplicação.", e);
+                var error = CommonFunctions.GenerateError("Ocorreu um erro interno na aplicação.", e);
                 //implementar log
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }

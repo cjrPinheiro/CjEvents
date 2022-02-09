@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Persistence
+namespace CJE.Persistence.Repositories
 {
     public class EventPersist : BasePersist<Event>, IEventPersist
     {
         public EventPersist(CjEventsContext context) : base(context) {}
-        public async Task<Event> GetEventByIdAsync(int Id, bool includeSpeakers)
+        public async Task<Event> GetEventByIdAsync(int userId, int Id, bool includeSpeakers)
         {
             IQueryable<Event> query = _context.Events
                 .Include(e => e.Batches)
@@ -25,12 +25,12 @@ namespace CJE.Persistence
                     .ThenInclude(pe => pe.Speaker);
             }
 
-            query = query.OrderBy(e => e.Id).Where(q=> q.Id == Id);
+            query = query.OrderBy(e => e.Id).Where(q=> q.Id == Id && q.UserId == userId);
 
             return await query.AsNoTracking().FirstOrDefaultAsync();
         }
 
-        public async Task<Event[]> GetAllEventsAsync(bool includeSpeakers)
+        public async Task<Event[]> GetAllEventsAsync(int userId, bool includeSpeakers)
         {
             IQueryable<Event> query = _context.Events
                 .Include(e => e.Batches)
@@ -42,12 +42,12 @@ namespace CJE.Persistence
                     .ThenInclude(pe => pe.Speaker);
             }
 
-            query = query.OrderBy(e => e.Id);
+            query = query.OrderBy(e => e.Id).Where(q=>q.UserId == userId);
 
             return await query.ToArrayAsync();
         }
 
-        public async Task<Event[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers)
+        public async Task<Event[]> GetAllEventsByThemeAsync(int userId, string theme, bool includeSpeakers)
         {
             IQueryable<Event> query = _context.Events
                 .Include(e => e.Batches)
@@ -59,7 +59,7 @@ namespace CJE.Persistence
                     .ThenInclude(pe => pe.Speaker);
             }
 
-            query = query.OrderBy(e => e.Id).Where(q => q.Theme.ToLower().Contains(theme.ToLower()));
+            query = query.OrderBy(e => e.Id).Where(q => q.Theme.ToLower().Contains(theme.ToLower()) && q.UserId==userId);
 
             return await query.ToArrayAsync();
         }

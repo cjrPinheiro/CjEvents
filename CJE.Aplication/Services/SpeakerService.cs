@@ -26,14 +26,17 @@ namespace CJE.Aplication.Services
             }
             catch (Exception) { throw; }
         }
-        public async Task<bool> UpdateSpeaker(Speaker @speaker)
+        public async Task<bool> UpdateSpeaker(int id, Speaker @speaker)
         {
             try
             {
+                var speakerExist = await _speakerRepository.GetSpeakerByIdAsync(id, false);
+                if (speakerExist == null) return false;
+
                 _speakerRepository.Update(@speaker);
                 return await _speakerRepository.SaveChangesAsync();
             }
-            catch (Exception) { throw; } 
+            catch (Exception) { throw; }
         }
         public async Task<bool> DeleteSpeaker(int idSpeaker)
         {

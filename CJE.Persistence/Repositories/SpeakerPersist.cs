@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Persistence
+namespace CJE.Persistence.Repositories
 {
     public class SpeakerPersist : BasePersist<Speaker>,ISpeakerPersist
     {
@@ -58,7 +58,7 @@ namespace CJE.Persistence
                     .ThenInclude(pe => pe.Event);
             }
 
-            query = query.OrderBy(e => e.Id).Where(q=>q.Name.ToLower().Contains(name.ToLower()));
+            query = query.OrderBy(e => e.Id).Where(q=>q.User.FullName.ToLower().Contains(name.ToLower()));
 
             return await query.ToArrayAsync();
         }

@@ -20,12 +20,14 @@ namespace CJE.Aplication.Services
             _eventRepository = eventPersist;
             _mapper = mapper;
         }
-        public async Task<bool> AddEvent(EventDto @event)
+        public async Task<bool> AddEvent(int userId, EventDto @event)
         {
             Event newEvent = null;
+            
             try
             {
                 newEvent = _mapper.Map<Event>(@event);
+                newEvent.UserId = userId;
                 await _eventRepository.AddAsync(newEvent);
                 return await _eventRepository.SaveChangesAsync();
             }
@@ -36,12 +38,12 @@ namespace CJE.Aplication.Services
 
 
         }
-        public async Task<bool> UpdateEvent(EventDto @event)
+        public async Task<bool> UpdateEvent(int userId, int id, EventDto @event)
         {
             
             try
             {
-                var existEvent = await _eventRepository.GetEventByIdAsync(@event.Id, false);
+                var existEvent = await _eventRepository.GetEventByIdAsync(userId, id, false);
                 if (existEvent == null) throw new DataNotFoundException($"EventId: {@event.Id} not found in database.");
 
                 _mapper.Map(@event, existEvent);
@@ -55,11 +57,11 @@ namespace CJE.Aplication.Services
                 throw;
             }
         }
-        public async Task<bool> DeleteEvent(int idEvent)
+        public async Task<bool> DeleteEvent(int userId, int idEvent)
         {
             try
             {
-                Event delEvent = await _eventRepository.GetEventByIdAsync(idEvent, false);
+                Event delEvent = await _eventRepository.GetEventByIdAsync(userId, idEvent, false);
 
                 if (delEvent == null) throw new DataNotFoundException($"EventId: {idEvent} not found in database.");
 
@@ -72,12 +74,12 @@ namespace CJE.Aplication.Services
             }
         }
 
-        public async Task<EventDto[]> GetAllEventsAsync(bool includeSpeakers = false)
+        public async Task<EventDto[]> GetAllEventsAsync(int userId, bool includeSpeakers = false)
         {
             EventDto[] eventsRes = null;
             try
             {
-                var events = await _eventRepository.GetAllEventsAsync(includeSpeakers);
+                var events = await _eventRepository.GetAllEventsAsync(userId,includeSpeakers);
                 eventsRes = _mapper.Map<EventDto[]>(events);
                 return eventsRes;
             }
@@ -87,12 +89,12 @@ namespace CJE.Aplication.Services
             }
         }
 
-        public async Task<EventDto[]> GetAllEventsByThemeAsync(string theme, bool includeSpeakers = false)
+        public async Task<EventDto[]> GetAllEventsByThemeAsync(int userId, string theme, bool includeSpeakers = false)
         {
             EventDto[] eventsRes = null;
             try
             {
-                var events = await _eventRepository.GetAllEventsByThemeAsync(theme, includeSpeakers);
+                var events = await _eventRepository.GetAllEventsByThemeAsync(userId,theme, includeSpeakers);
                 eventsRes = _mapper.Map<EventDto[]>(events);
                 return eventsRes;
 
@@ -103,12 +105,12 @@ namespace CJE.Aplication.Services
             }
         }
 
-        public async Task<EventDto> GetEventByIdAsync(int Id, bool includeSpeakers = false)
+        public async Task<EventDto> GetEventByIdAsync(int userId, int Id, bool includeSpeakers = false)
         {
             EventDto eventRes = null;
             try
             {
-                var events = await _eventRepository.GetEventByIdAsync(Id, includeSpeakers);
+                var events = await _eventRepository.GetEventByIdAsync(userId, Id, includeSpeakers);
                 eventRes = _mapper.Map<EventDto>(events);
                 return eventRes;
             }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.API.Business.Models
+namespace CJE.Common.Models.Errors
 {
     public class GenericError
     {
