@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EventsComponent } from './_components/events/events.component';
 import { SpeakersComponent } from './_components/speakers/speakers.component';
-import { NavComponent } from './_components/nav/nav.component';
+import { NavComponent } from './_shared/nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventService } from 'src/_app/_services/event.service';
 import { DateTimeFormatPipe } from 'src/_app/_helpers/dateTimeFormat.pipe';
@@ -27,6 +27,9 @@ import { EventListComponent } from './_components/events/event-list/event-list.c
 import { UserComponent } from './_components/user/user.component';
 import { LoginComponent } from './_components/user/login/login.component';
 import { RegistrationComponent } from './_components/user/registration/registration.component';
+import { AccountService } from './_services/account.service';
+import { JwtInterceptor } from './_interceptors/jwt.Interceptor';
+import { HomeComponent } from './_components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -43,8 +46,9 @@ import { RegistrationComponent } from './_components/user/registration/registrat
     EventListComponent,
     UserComponent,
     LoginComponent,
-    RegistrationComponent
-   ],
+    RegistrationComponent,
+    HomeComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -66,10 +70,11 @@ import { RegistrationComponent } from './_components/user/registration/registrat
   ],
   providers: [
     EventService,
-    BsModalService
+    BsModalService,
+    AccountService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
 })
 export class AppModule { }

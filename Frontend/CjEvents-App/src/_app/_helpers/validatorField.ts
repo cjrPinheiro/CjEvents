@@ -13,6 +13,9 @@ export class ValidatorField {
 
       if(control.value != matchingControl.value){
         matchingControl.setErrors({mustMatch: true});
+        console.log('entou set errors');
+        console.log(control.value);
+        console.log(matchingControl.value);
       } else {
         matchingControl.setErrors(null);
       }

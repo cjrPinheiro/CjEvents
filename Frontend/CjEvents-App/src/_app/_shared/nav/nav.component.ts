@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from '@app/_services/account.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-nav',
@@ -8,13 +10,19 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   isCollapsed = true;
-  constructor(private router: Router) { }
-
+  constructor(private router: Router, public accountService: AccountService) { }
+  
   ngOnInit(): void {
   }
-
+  
   showMenu(): boolean{
     return this.router.url != '/user/login';
-
   }
+  
+  logout(): void{
+    this.accountService.logout();
+    this.router.navigateByUrl('/user/login')
+    
+  }
+  
 }

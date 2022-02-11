@@ -58,7 +58,7 @@ export class EventListComponent implements OnInit {
       },
       error: (e) => {
         this.spinner.hide(),
-        this.toastr.error("Error on load the events.", "Error")
+        this.toastr.error("Error on load the events." + e, "Error")
       },
       complete: () => this.spinner.hide()
     });

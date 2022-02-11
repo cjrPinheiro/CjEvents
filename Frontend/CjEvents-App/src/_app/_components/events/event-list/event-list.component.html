@@ -33,7 +33,7 @@
         <th class="d-none d-md-table-cell">Place</th>
         <th>Date</th>
         <th>Max People</th>
-        <th class="d-none d-md-table-cell">Batch</th>
+        <!-- <th class="d-none d-md-table-cell">Batch</th> -->
         <th>Options</th>
       </tr>
     </thead>
@@ -53,7 +53,7 @@
         <td class="d-none d-md-table-cell">{{event.place}}</td>
         <td>{{event.date | DateFormatPipe}}  </td>
         <td>{{event.maxPeople}}</td>
-        <td class="d-none d-md-table-cell">{{event.batches[0].name | uppercase}}</td>
+        <!-- <td class="d-none d-md-table-cell">{{event.batches[0].name | uppercase}}</td> -->
         <td>
           <button class="btn btn-danger btn-lg" tooltip="Excluir" (click)="openModal(template)"><i class="fa fa-trash" ></i></button>
         </td>

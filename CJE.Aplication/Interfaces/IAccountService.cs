@@ -13,7 +13,7 @@ namespace CJE.Aplication.Interfaces
         Task<bool> UserExists(string userName);
         Task<UserExistingDto> GetUserByUserNameAsync(string userName);
         Task<SignInResult> CheckUserPasswordAsync(UserLoginDto userLogin);
-        Task<UserDto> CreateAccountAsync(UserDto newUser);
+        Task<UserExistingDto> CreateAccountAsync(UserDto newUser);
         Task<UserExistingDto> UpdateAccount(int id, UserExistingDto userExisting);
     }
 }

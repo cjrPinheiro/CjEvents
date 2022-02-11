@@ -31,7 +31,7 @@ namespace CJE.Aplication.Services
         {
             try
             {
-                var user = await _userManager.Users.SingleOrDefaultAsync(user => user.NormalizedUserName == userLogin.Username.ToUpper());
+                var user = await _userManager.Users.SingleOrDefaultAsync(user => user.NormalizedUserName == userLogin.UserName.ToUpper());
                 if (user != null)
                 {
                     //no 3º parametro é possivel bloquear o usuario caso a senha esteja invalida
@@ -47,17 +47,17 @@ namespace CJE.Aplication.Services
             }
         }
 
-        public async Task<UserDto> CreateAccountAsync(UserDto newUser)
+        public async Task<UserExistingDto> CreateAccountAsync(UserDto newUser)
         {
             try
             {
-                var user = _mapper.Map<User>(newUser);
+                User user = _mapper.Map<User>(newUser);
 
-                var result = await _userManager.CreateAsync(user, newUser.Password);
+                IdentityResult result = await _userManager.CreateAsync(user, newUser.Password);
 
                 if (result.Succeeded)
                 {
-                    return _mapper.Map<UserDto>(user);
+                    return _mapper.Map<UserExistingDto>(user);
                 }
                 return null;
             }
@@ -94,19 +94,20 @@ namespace CJE.Aplication.Services
                 var user = await _userRepository.GetUserByIdAsync(id);
                 if (user == null) return null;
 
+                userExisting.Id = user.Id;
+
                 _mapper.Map(userExisting, user);
-
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-                var result = await _userManager.ResetPasswordAsync(user, token, userExisting.Password);
-
+                if (!string.IsNullOrEmpty(userExisting.Password))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    await _userManager.ResetPasswordAsync(user, token, userExisting.Password);
+                }
                 _userRepository.Update(user);
 
                 if (await _userRepository.SaveChangesAsync())
                 {
                     var upUser = await _userRepository.GetUserByIdAsync(user.Id);
                     var mapRes = _mapper.Map<UserExistingDto>(upUser);
-                    mapRes.Token = token;
                     return mapRes;
                 }
                 return null;

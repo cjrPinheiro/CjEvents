@@ -55,11 +55,14 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                if (!await _accountService.UserExists(userDto.Username))
+                if (!await _accountService.UserExists(userDto.UserName))
                 {
                     var newUser = await _accountService.CreateAccountAsync(userDto);
                     if (newUser != null)
+                    {
+                        newUser.Token = await _tokenService.CreateTokenAsync(newUser);
                         return Created("Succesfully registered", newUser);
+                    }
                     return BadRequest("The User couldn't be created at this time. Please try again soon.");
                 }
                 else
@@ -79,7 +82,7 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                var user = await _accountService.GetUserByUserNameAsync(userDto.Username);
+                var user = await _accountService.GetUserByUserNameAsync(userDto.UserName);
                 if (user != null)
                 {
                     var loginResult = await _accountService.CheckUserPasswordAsync(userDto);
@@ -89,9 +92,9 @@ namespace CJE.API.Business.Controllers
                         var token = await _tokenService.CreateTokenAsync(user);
                         return Ok(new
                         {
-                            userName = user.Username,
+                            userName = user.UserName,
                             firstName = user.FirstName,
-                            token = token
+                            token
                         });
                     }
                 }
@@ -111,13 +114,18 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
+                if (User.GetUserName() != userExistingDto.UserName)
+                    return Unauthorized("Usuer not allowed");
                 var user = await _accountService.GetUserByUserNameAsync(User.GetUserName());
 
                 if (user != null)
                 {
                     var updatedUser = await _accountService.UpdateAccount(User.GetUserId(), userExistingDto);
                     if (updatedUser != null)
+                    {
+                        updatedUser.Token = await _tokenService.CreateTokenAsync(updatedUser);
                         return Ok(updatedUser);
+                    }
                     return BadRequest("The User couldn't be updated at this time. Please try again soon.");
                 }
                 else

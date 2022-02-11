@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="row mt-5">
 
 	<div class="col-md-6 d-none d-md-block" style="height: 450px;">
 		<div class="text-center col-md-12 my-auto side-heder">
@@ -10,8 +10,6 @@
 	<div class="col-md-6">
 
 		<form class="p-1" [formGroup]="form">
-      <p>{{form.status | json}}</p>
-      <p>{{form.value | json}}</p>
       <div class="pb-2 d-block d-md-none">
         <h3 class="border-bottom">Cadastro de Usuário</h3>
       </div>
@@ -62,7 +60,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-12">
-          <button class="btn btn-lg btn-success btn-block px-5" [disabled]="!form.valid">
+          <button class="btn btn-lg btn-success btn-block px-5" [disabled]="!form.valid" (click)="register()">
             Registar
           </button>
         </div>

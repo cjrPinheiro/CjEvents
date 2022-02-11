@@ -13,8 +13,10 @@ namespace CJE.Domain.Entities.Enum
         Graduate,
         Specialist,
         PostGraduate,
-        Phd,
         Master,
+        Doctorade,
+        PostDoctorade
+   
 
     }
 }
