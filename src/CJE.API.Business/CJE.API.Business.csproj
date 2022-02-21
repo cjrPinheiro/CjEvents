@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CJE.Aplication\CJE.Aplication.csproj" />
+    <ProjectReference Include="..\CJE.Application\CJE.Application.csproj" />
     <ProjectReference Include="..\CJE.Common\CJE.Common.csproj" />
     <ProjectReference Include="..\CJE.Persistence\CJE.Persistence.csproj" />
   </ItemGroup>

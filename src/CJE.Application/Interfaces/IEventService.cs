@@ -1,7 +1,7 @@
-﻿using CJE.Aplication.Dtos;
+﻿using CJE.Application.Dtos;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Interfaces
+namespace CJE.Application.Interfaces
 {
     public interface IEventService
     {

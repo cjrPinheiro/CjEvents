@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ValidatorField } from '@app/_helpers/validatorField';
 import { User } from '@app/_models/Identity/user';
 import { AccountService } from '@app/_services/account.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -17,7 +18,7 @@ export class RegistrationComponent implements OnInit {
   public get f(){
     return this.form.controls;
   }
-  constructor(private fb: FormBuilder, private accountService: AccountService, private toastr: ToastrService, private router: Router ) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private toastr: ToastrService, private router: Router, private spinner: NgxSpinnerService ) { }
 
   ngOnInit() {
     this.validation();
@@ -40,10 +41,19 @@ export class RegistrationComponent implements OnInit {
   }
 
   public register(): void{
+    this.spinner.show();
+
     this.user = { ...this.form.value };
     this.accountService.register(this.user).subscribe(
-      () => this.router.navigateByUrl('/dashboard'),
-      (er: any) => this.toastr.error(er.error)
+      () => {
+        this.router.navigateByUrl('/dashboard');
+        this.toastr.success('Account created !', 'Success');
+        this.spinner.hide();
+      },
+      (er: any) =>{
+         this.toastr.error(er.error);
+         this.spinner.hide();
+      }
       );
 
 

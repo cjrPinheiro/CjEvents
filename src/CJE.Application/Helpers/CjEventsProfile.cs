@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CJE.Aplication.Dtos;
+using CJE.Application.Dtos;
 using CJE.Domain.Entities;
 using CJE.Domain.Entities.Identity;
 using System;

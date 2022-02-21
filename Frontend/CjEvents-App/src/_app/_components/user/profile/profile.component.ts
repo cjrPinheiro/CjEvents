@@ -55,6 +55,7 @@ export class ProfileComponent implements OnInit {
 
   private loadUser(): void{
     this.spinner.show();
+
     this.accountService.getUser().subscribe(
       (userResponse: UserExisting) => {
         this.userUpdate = userResponse;

@@ -1,11 +1,11 @@
-﻿using CJE.Aplication.Dtos;
+﻿using CJE.Application.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Interfaces
+namespace CJE.Application.Interfaces
 {
     public interface ITokenService
     {

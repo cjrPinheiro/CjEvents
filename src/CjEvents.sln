@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CJE.Domain", "CJE.Domain\CJ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CJE.Persistence", "CJE.Persistence\CJE.Persistence.csproj", "{14C98264-09F6-4B28-9E27-C0302AAE9A0F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CJE.Aplication", "CJE.Aplication\CJE.Aplication.csproj", "{922FC432-3F42-4656-B63C-CA9CA79B0B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CJE.Application", "CJE.Application\CJE.Application.csproj", "{922FC432-3F42-4656-B63C-CA9CA79B0B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CJE.Common", "CJE.Common\CJE.Common.csproj", "{D06C9AB8-93CB-4C71-BF40-ADCE624BBECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CJE.Common", "CJE.Common\CJE.Common.csproj", "{D06C9AB8-93CB-4C71-BF40-ADCE624BBECE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

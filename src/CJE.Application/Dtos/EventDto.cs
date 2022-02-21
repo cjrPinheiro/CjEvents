@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Dtos
+namespace CJE.Application.Dtos
 {
     public class EventDto
     {

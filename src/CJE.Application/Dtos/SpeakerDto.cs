@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Dtos
+namespace CJE.Application.Dtos
 {
     public class SpeakerDto
     {

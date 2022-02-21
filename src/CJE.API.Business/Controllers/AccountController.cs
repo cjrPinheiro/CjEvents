@@ -1,5 +1,5 @@
-﻿using CJE.Aplication.Dtos;
-using CJE.Aplication.Interfaces;
+﻿using CJE.Application.Dtos;
+using CJE.Application.Interfaces;
 using CJE.Common.Extensions;
 using CJE.Common.Utility;
 using Microsoft.AspNetCore.Authorization;

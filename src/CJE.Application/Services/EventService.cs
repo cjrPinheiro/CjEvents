@@ -1,14 +1,14 @@
-﻿using CJE.Aplication.Interfaces;
+﻿using CJE.Application.Interfaces;
 using CJE.Persistence.Interfaces;
 using System;
 using System.Threading.Tasks;
 using CJE.Common.Exceptions;
-using CJE.Aplication.Dtos;
+using CJE.Application.Dtos;
 using CJE.Domain.Entities;
 using AutoMapper;
 using System.Collections.Generic;
 
-namespace CJE.Aplication.Services
+namespace CJE.Application.Services
 {
     public class EventService : IEventService
     {

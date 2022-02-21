@@ -1,4 +1,4 @@
-﻿using CJE.Aplication.Interfaces;
+﻿using CJE.Application.Interfaces;
 using CJE.Domain.Entities;
 using CJE.Persistence.Interfaces;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Services
+namespace CJE.Application.Services
 {
     public class SpeakerService : ISpeakerService
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Interfaces
+namespace CJE.Application.Interfaces
 {
     public interface ISpeakerService
     {

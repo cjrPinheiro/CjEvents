@@ -1,5 +1,5 @@
-using CJE.Aplication.Interfaces;
-using CJE.Aplication.Services;
+using CJE.Application.Interfaces;
+using CJE.Application.Services;
 using CJE.Persistence;
 using CJE.Persistence.Interfaces;
 using Microsoft.AspNetCore.Builder;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using CJE.Aplication.Dtos;
-using CJE.Aplication.Interfaces;
+using CJE.Application.Dtos;
+using CJE.Application.Interfaces;
 using CJE.Domain.Entities.Identity;
 using CJE.Persistence.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJE.Aplication.Services
+namespace CJE.Application.Services
 {
     public class AccountService : IAccountService
     {
