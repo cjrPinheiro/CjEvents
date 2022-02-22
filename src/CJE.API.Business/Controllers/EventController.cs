@@ -96,13 +96,14 @@ namespace CJE.API.Business.Controllers
         {
             try
             {
-                var newEvent = await _eventService.AddEvent(User.GetUserId(), @event);
+                var created = await _eventService.AddEvent(User.GetUserId(), @event);
 
-                if (!newEvent)
+                if (!created)
                 {
                     //implementar log
                     return BadRequest(CommonFunctions.GenerateError("Ocorreu um erro ao finalizar as alterações. Conteúdo não foi criado."));
                 }
+        
                 return Created("", "");
             }
             catch (Exception e)
@@ -112,7 +113,7 @@ namespace CJE.API.Business.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, error);
             }
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, EventDto @event)
         {
             try

@@ -24,8 +24,6 @@ namespace CJE.Application.Dtos
         public string Phone { get; set; }
         [Required,EmailAddress]
         public string Email { get; set; }
-        public int UserId { get; set; }
-        public UserDto User { get; set; }
         public IEnumerable<BatchDto> Batches { get; set; }
         public IEnumerable<SocialNetworkDto> SocialNetworks { get; set; }
     }

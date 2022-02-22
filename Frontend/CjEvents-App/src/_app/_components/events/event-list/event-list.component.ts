@@ -21,7 +21,7 @@ export class EventListComponent implements OnInit {
   public showImage : boolean = true;
   public _filterRows : string = "";
   public modalRef?: BsModalRef;
-
+  public eventId: number = 0;
 
   constructor(private modalService: BsModalService,
      private eventService: EventService,
@@ -57,11 +57,9 @@ export class EventListComponent implements OnInit {
         this.filteredEvents = this.events
       },
       error: (e) => {
-        this.spinner.hide(),
-        this.toastr.error("Error on load the events." + e, "Error")
-      },
-      complete: () => this.spinner.hide()
-    });
+        this.toastr.error("Error on load the events.", "Error")
+      }
+    }).add(() => this.spinner.hide());
   }
   public FilterEvents(filter : string) : EventObj[] {
     filter = filter.toLocaleLowerCase();
@@ -74,13 +72,28 @@ export class EventListComponent implements OnInit {
 
   }
 
-  openModal(template: TemplateRef<any>) {
+  openModal(event: any, template: TemplateRef<any>, eventId: number) {
+    event.stopPropagation();
+    this.eventId = eventId;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   confirm(): void {
     this.modalRef?.hide();
-    this.toastr.success("Event deleted with sucess!", 'Deleted!')
+    this.spinner.show();
+
+    this.eventService.delete(this.eventId).subscribe({
+      next: () => {
+        this.toastr.success("Event successfully deleted!", 'Deleted!');
+        this.getEvents();
+      },
+      error: (error) => {
+        console.error(error);
+        this.toastr.error('Error on delete the event!');
+      }
+    }).add(() => this.spinner.hide());
+
+
   }
 
   decline(): void {
@@ -89,6 +102,7 @@ export class EventListComponent implements OnInit {
 
   detailEvent(id: number):void{
     this.router.navigate([`/events/detail/${id}`])
-
   }
+
+
 }

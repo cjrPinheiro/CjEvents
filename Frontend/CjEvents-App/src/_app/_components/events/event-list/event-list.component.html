@@ -55,7 +55,7 @@
         <td>{{event.maxPeople}}</td>
         <!-- <td class="d-none d-md-table-cell">{{event.batches[0].name | uppercase}}</td> -->
         <td>
-          <button class="btn btn-danger btn-lg" tooltip="Excluir" (click)="openModal(template)"><i class="fa fa-trash" ></i></button>
+          <button class="btn btn-danger btn-lg" tooltip="Excluir" (click)="openModal($event, template, event.id)"><i class="fa fa-trash" ></i></button>
         </td>
       </tr>
 
@@ -72,7 +72,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Delete this event?</p>
+    <p>Delete this event? ({{eventId}})</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Yes</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
   </div>

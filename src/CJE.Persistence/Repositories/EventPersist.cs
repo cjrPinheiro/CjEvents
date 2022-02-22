@@ -17,7 +17,8 @@ namespace CJE.Persistence.Repositories
         {
             IQueryable<Event> query = _context.Events
                 .Include(e => e.Batches)
-                .Include(e => e.SocialNetworks);
+                .Include(e => e.SocialNetworks)
+                .Include(e => e.User);
 
             if (includeSpeakers)
             {

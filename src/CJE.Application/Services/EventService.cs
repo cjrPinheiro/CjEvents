@@ -43,6 +43,7 @@ namespace CJE.Application.Services
             
             try
             {
+               
                 var existEvent = await _eventRepository.GetEventByIdAsync(userId, id, false);
                 if (existEvent == null) throw new DataNotFoundException($"EventId: {@event.Id} not found in database.");
 
@@ -52,7 +53,7 @@ namespace CJE.Application.Services
                 _eventRepository.Update(existEvent);
                 return await _eventRepository.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }
